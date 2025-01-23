@@ -41,7 +41,7 @@ const facialExpressions = {
     mouthFunnel: 0.2,
     browInnerUp: 1,
   },
-  angry: {
+  /*angry: {
     browDownLeft: 1,
     browDownRight: 1,
     eyeSquintLeft: 1,
@@ -58,7 +58,7 @@ const facialExpressions = {
     mouthClose: 0.23,
     mouthFunnel: 0.63,
     mouthDimpleRight: 1,
-  },
+  },*/
   crazy: {
     browInnerUp: 0.9,
     jawForward: 1,
