@@ -1,13 +1,15 @@
 import { useRef } from "react";
 import { useSpeech } from "../hooks/useSpeech";
+import { GroupProps } from "@react-three/fiber";
 
-export const ChatInterface = ({ hidden, ...props }) => {
-  const input = useRef();
-  const { tts, loading, message, startRecording, stopRecording, recording } = useSpeech();
+export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
+  const input = useRef<HTMLInputElement>(null);
+  const { tts, loading, message, startRecording, stopRecording, recording } =
+    useSpeech();
 
   const sendMessage = () => {
-    const text = input.current.value;
-    if (!loading && !message) {
+    const text = input.current?.value || "";
+    if (!loading && !message && input.current) {
       tts(text);
       input.current.value = "";
     }
@@ -21,7 +23,9 @@ export const ChatInterface = ({ hidden, ...props }) => {
       <div className="self-start backdrop-blur-md bg-white bg-opacity-50 p-4 rounded-lg">
         <h1 className="font-black text-xl text-gray-700">Digital Human</h1>
         <p className="text-gray-600">
-          {loading ? "Loading..." : "Type a message and press enter to chat with the AI."}
+          {loading
+            ? "Loading..."
+            : "Type a message and press enter to chat with the AI."}
         </p>
       </div>
       <div className="w-full flex flex-col items-end justify-center gap-4"></div>

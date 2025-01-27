@@ -3,9 +3,9 @@ import { useEffect, useRef } from "react";
 import { Avatar } from "./Avatar";
 
 export const Scenario = () => {
-  const cameraControls = useRef();
+  const cameraControls = useRef<CameraControls>(null);
   useEffect(() => {
-    cameraControls.current.setLookAt(0, 1.5, 4, 0, 0, -80, true); 
+    cameraControls.current?.setLookAt(0, 1.6, 3, 1, 0, -80, true); 
   }, []);
   return (
     <>

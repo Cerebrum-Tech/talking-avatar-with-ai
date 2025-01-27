@@ -4,7 +4,7 @@ import App from "./App";
 import { SpeechProvider } from "./hooks/useSpeech";
 import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root") as any).render(
   <React.StrictMode>
     <SpeechProvider>
       <App />
