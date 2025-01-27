@@ -59,8 +59,8 @@ export function Avatar(props: any) {
     }
     setAnimation(message.animation);
     setFacialExpression(message.facialExpression);
-    setLipsync(message.lipsync);
     const audio = new Audio("data:audio/mp3;base64," + message.audio);
+    audio.onplay = () => setLipsync(message.lipsync);
     audio.play();
     setAudio(audio);
     audio.onended = onMessagePlayed;
