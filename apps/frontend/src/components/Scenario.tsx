@@ -2,6 +2,7 @@ import { CameraControls, Environment } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { Avatar } from "./Avatar";
 
+
 export const Scenario = () => {
   const cameraControls = useRef<CameraControls>(null);
   useEffect(() => {

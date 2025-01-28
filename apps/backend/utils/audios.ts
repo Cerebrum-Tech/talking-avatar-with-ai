@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { execCommand } from "./files.mjs";
+import { execCommand } from "./files";
 
 async function convertAudioToMp3({ audioData }) {
   const dir = 'tmp';

@@ -1,4 +1,4 @@
-import { execCommand } from "../utils/files.mjs";
+import { execCommand } from "../utils/files";
 
 const getPhonemes = async ({ message }) => {
   try {

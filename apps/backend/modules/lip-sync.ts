@@ -1,6 +1,6 @@
-import { convertTextToSpeech } from "./elevenLabs.mjs";
-import { getPhonemes } from "./rhubarbLipSync.mjs";
-import { readJsonTranscript, audioFileToBase64 } from "../utils/files.mjs";
+import { convertTextToSpeech } from "./elevenLabs";
+import { getPhonemes } from "./rhubarbLipSync";
+import { readJsonTranscript, audioFileToBase64 } from "../utils/files";
 
 const MAX_RETRIES = 10;
 const RETRY_DELAY = 0;

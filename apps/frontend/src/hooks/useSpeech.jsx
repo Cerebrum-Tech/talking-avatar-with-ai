@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { socket } from "../socket";
 
 const backendUrl = "http://localhost:3000";
 
@@ -10,6 +11,50 @@ export const SpeechProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState();
   const [loading, setLoading] = useState(false);
+  const [history, setHistory] = useState([]);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [allMessagesPlayed, setAllMessagesPlayed] = useState(false);
+
+  useEffect(() => {
+    // clear older event listeners
+    socket.off("connect");
+    socket.off("disconnect");
+    socket.off("tts");
+    socket.off("pre-message");
+
+    function onConnect() {
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+    function onTts(response) {
+      console.log("tts", response);
+      setHistory(response.history);
+      setMessages((messages) => [...response.messages]);
+      setLoading(false);
+    }
+
+    function onPreMessage(response) {
+      setMessages((messages) => [...messages, ...response.messages]);
+    }
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+    socket.on("tts", onTts);
+    socket.on("pre-message", onPreMessage);
+
+    return () => {
+      socket.off("tts", onTts);
+      socket.off("pre-message", onPreMessage);
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+    };
+  }, []);
 
   let chunks = [];
 
@@ -82,7 +127,7 @@ export const SpeechProvider = ({ children }) => {
     }
   };
 
-  const tts = async (message) => {
+  const tts2 = async (message) => {
     setLoading(true);
     try {
       const data = await fetch(`${backendUrl}/tts`, {
@@ -90,10 +135,11 @@ export const SpeechProvider = ({ children }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, history }),
       });
-      const response = (await data.json()).messages;
-      setMessages((messages) => [...messages, ...response]);
+      const response = await data.json();
+      setHistory(response.history);
+      setMessages((messages) => [...messages, ...response.messages]);
     } catch (error) {
       console.error(error);
     } finally {
@@ -101,14 +147,30 @@ export const SpeechProvider = ({ children }) => {
     }
   };
 
+  const tts = async (message) => {
+    setLoading(true);
+
+    setHistory((history) => [...history, {
+      role: "user",
+      content: message,
+    }]);
+
+    socket.emit("tts", { message, history });
+  };
+
   const onMessagePlayed = () => {
+    setIsSpeaking(false);
     setMessages((messages) => messages.slice(1));
   };
 
   useEffect(() => {
     if (messages.length > 0) {
+      setAllMessagesPlayed(false);
+      console.log("message", messages);
       setMessage(messages[0]);
     } else {
+      console.log("no messages");
+      setAllMessagesPlayed(true);
       setMessage(null);
     }
   }, [messages]);
@@ -123,6 +185,10 @@ export const SpeechProvider = ({ children }) => {
         message,
         onMessagePlayed,
         loading,
+        isSpeaking,
+        setIsSpeaking,
+        allMessagesPlayed,
+        history,
       }}
     >
       {children}

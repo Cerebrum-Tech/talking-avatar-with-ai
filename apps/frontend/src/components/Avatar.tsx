@@ -48,7 +48,7 @@ export function Avatar(props: any) {
     "/models/avatar.glb"
   ) as unknown as CustomGLTF;
   const { animations } = useGLTF("/models/animations.glb");
-  const { message, onMessagePlayed } = useSpeech();
+  const { message, onMessagePlayed,setIsSpeaking } = useSpeech();
   const [lipsync, setLipsync] = useState<any>();
   const [setupMode, setSetupMode] = useState(false);
 
@@ -57,6 +57,8 @@ export function Avatar(props: any) {
       setAnimation("Idle");
       return;
     }
+    console.log(message);
+    setIsSpeaking(true);
     setAnimation(message.animation);
     setFacialExpression(message.facialExpression);
     const audio = new Audio("data:audio/mp3;base64," + message.audio);

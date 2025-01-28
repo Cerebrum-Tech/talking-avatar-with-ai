@@ -1,4 +1,4 @@
-import { audioFileToBase64, readJsonTranscript } from "../utils/files.mjs";
+import { audioFileToBase64, readJsonTranscript } from "../utils/files";
 import dotenv from "dotenv";
 dotenv.config();
 
