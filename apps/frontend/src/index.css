@@ -14,7 +14,7 @@
 body {
   margin: 0;
   background-color: #060606;
-  background-image: url("image1.png");
+  background-image: url("/image1.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
