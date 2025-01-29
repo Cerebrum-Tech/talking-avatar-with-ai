@@ -118,7 +118,7 @@ export async function sendMessage(
               content:
                 template +
                 "\n\n " +
-                "Current time in Istanbul is: " +
+                "Current time is: " +
                 new Date().toLocaleTimeString("tr-TR"),
             },
             ...messageParams,
