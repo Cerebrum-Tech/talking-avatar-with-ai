@@ -45,7 +45,7 @@ function App() {
               </>
             }
           />
-          {location.href.includes("en") && (
+          {location.href.includes("/en") && (
             <Route
               path="/en"
               element={
@@ -60,7 +60,7 @@ function App() {
               }
             />
           )}
-          {location.href.includes("tr") && (
+          {location.href.includes("/tr") && (
             <Route
               path="/tr"
               element={
