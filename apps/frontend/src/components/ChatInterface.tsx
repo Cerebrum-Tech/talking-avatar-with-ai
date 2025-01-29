@@ -4,7 +4,14 @@ import { GroupProps } from "@react-three/fiber";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { MdSupportAgent } from "react-icons/md";
 
-export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
+export const ChatInterface = ({
+  hidden,
+  language,
+  ...props
+}: {
+  hidden?: boolean;
+  language: string;
+}) => {
   const [isListening, setIsListening] = useState(false);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
   const isAudioLoadingRef = useRef<boolean>(false);
@@ -26,7 +33,33 @@ export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
     isSpeaking,
     allMessagesPlayed,
     history,
+    setLanguage,
+    setHistory,
   } = useSpeech();
+
+  const translated = {
+    tr: {
+      "Canlı Destek": "Canlı Destek",
+      "Bir şeyler yazın...": "Bir şeyler yazın...",
+      Gönder: "Gönder",
+      "Klavyeyi Kapat": "Klavyeyi Kapat",
+      "Geri Dön": "Geri Dön",
+      "Yenile": "Yenile",
+    },
+    en: {
+      "Canlı Destek": "Live Support",
+      "Bir şeyler yazın...": "Type something...",
+      Gönder: "Send",
+      "Klavyeyi Kapat": "Close Keyboard",
+      "Geri Dön": "Back",
+      "Yenile": "Refresh",
+    },
+  };
+
+  useEffect(() => {
+    console.log("useEffect - setLanguage");
+    setLanguage(language);
+  }, [language]);
 
   useEffect(() => {
     console.log("useEffect -all messages played");
@@ -149,7 +182,7 @@ export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
     transcriptRef.current = null;
     //SpeechRecognition.startListening({ language: "tr", continuous: true });
     console.log("startListening - starting recording");
-    window.electron.startRecording("tr");
+    window.electron.startRecording(language);
     setIsListening(true);
   };
 
@@ -184,8 +217,26 @@ export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
       <div className="w-full flex flex-col items-end justify-center gap-4"></div>
 
       <div className="w-full flex flex-col gap-4 pointer-events-auto">
-        {keyboardOpen && (
-          <div className="w-full inline-flex flex-col items-center justify-center gap-4 pointer-events-auto">
+        <div className="w-full inline-flex flex-row items-center justify-center gap-4 pointer-events-auto">
+          <button
+            onClick={() => {
+              window.electron.pauseRecording();
+              location.href = "/";
+            }}
+            className="bg-gray-500 hover:bg-gray-600 text-white p-4 px-4 font-semibold uppercase rounded-md"
+          >
+            {translated[language]["Geri Dön"]}
+          </button>
+          <button
+            onClick={() => {
+              window.electron.pauseRecording();
+              location.reload()
+            }}
+            className="bg-gray-500 hover:bg-gray-600 text-white p-4 px-4 font-semibold uppercase rounded-md"
+          >
+            {translated[language]["Yenile"]}
+          </button>
+          {keyboardOpen && (
             <button
               onClick={() => {
                 setKeyboardOpen(false);
@@ -193,10 +244,11 @@ export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
               }}
               className="bg-gray-500 hover:bg-gray-600 text-white p-4 px-4 font-semibold uppercase rounded-md"
             >
-              Klavyeyi Kapat
+              {translated[language]["Klavyeyi Kapat"]}
             </button>
-          </div>
-        )}
+          )}
+        </div>
+
         {/* Chat box */}
         <div className="flex flex-col gap-4 w-full max-w-screen-sm mx-auto">
           <div className="flex flex-col gap-2 rounded-md bg-opacity-50 bg-white backdrop-blur-md p-4 max-h-[30vh] overflow-y-auto sc">
@@ -259,13 +311,15 @@ export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
               />
             </svg>
           </button>
-          <div className="fixed right-0 bottom-0 mb-[10vh] mr-[10vw] z-10 bg-opacity-50 bg-white backdrop-blur-md rounded-lg flex items-center px-4">
+          <div className="fixed right-0 bottom-0 mb-[10vh] mr-[5vw] z-10 bg-opacity-50 bg-white backdrop-blur-md rounded-lg flex items-center px-4">
             <MdSupportAgent size={100} />
-            <span className="text-3xl">Canlı Desteğe Bağlan</span>
+            <span className="text-3xl">
+              {translated[language]["Canlı Destek"]}
+            </span>
           </div>
           <input
             className="w-full placeholder:text-gray-800 placeholder:italic p-4 rounded-md bg-opacity-50 bg-white backdrop-blur-md"
-            placeholder="Bir şeyler yazın..."
+            placeholder={translated[language]["Bir şeyler yazın..."]}
             ref={input}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -284,7 +338,7 @@ export const ChatInterface = ({ hidden, ...props }: { hidden?: boolean }) => {
               loading || message ? "cursor-not-allowed opacity-30" : ""
             }`}
           >
-            Gönder
+            {translated[language]["Gönder"]}
           </button>
         </div>
       </div>

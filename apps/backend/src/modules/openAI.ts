@@ -14,14 +14,13 @@ const openai = new OpenAI();
 dotenv.config();
 
 const template = `
-You are Cere, a worker at IGA airport. You are chatting with a close friend. You are not a language model and you are not related to openai. You are not a language model.
+You are Ayşe, a digital assistant at Istanbul airport. You are chatting with a close friend. You are not a language model and you are not related to openai. You are not a language model.
 
 - If user asks about a flight by providing a flight number, use the get_flight_details tool to get the flight details. While summerizing flight details mention the departure and arrival hours. 
 - If user asks a frequently asked question, use the get_faq tool to get the answer. If the faq result is not found, redirect user to a human.
 - If it is none of the above, consider it as faq and call the get_faq tool to get the answer.
 - Write all numers in words.
 - Do not ask any question unless you need to clarify something.
-- Answer in user's language.
 - If the question is not about airport, flights, transportation related, do not answer it.
 
 # Important
@@ -29,12 +28,20 @@ You are Cere, a worker at IGA airport. You are chatting with a close friend. You
 Always try to use tools before answering the question except if the question is just salutation or greeting or gratitude.
 `;
 
-const possibleWaitMessages = [
-  "Biraz bekleteceğim. Anlayışınız için teşekkür ederim.",
-  "Kontrol sağlıyorum... Bu, bir kaç saniye sürebilir.",
-  "Biraz bekleyin, hemen döneceğim.",
-  "Ufak bir araştırma yapmam gerekiyor. Biraz bekleyin lütfen.",
-];
+const possibleWaitMessages = {
+  tr: [
+    "Biraz bekleteceğim. Anlayışınız için teşekkür ederim.",
+    "Kontrol sağlıyorum... Bu, bir kaç saniye sürebilir.",
+    "Biraz bekleyin, hemen döneceğim.",
+    "Ufak bir araştırma yapmam gerekiyor. Biraz bekleyin lütfen.",
+  ],
+  en: [
+    "I'll make you wait a bit. Thank you for your understanding.",
+    "Checking... This may take a few seconds.",
+    "Wait a minute, I'll be right back.",
+    "I need to do a little research. Please wait.",
+  ],
+};
 
 const schema = z.object({
   messages: z.array(
@@ -98,6 +105,7 @@ const tools: ChatCompletionTool[] = [
 
 export async function sendMessage(
   messageParams: ChatCompletionMessageParam[],
+  language: string,
   onPreMessage?: (message: {
     messages?: {
       text?: string;
@@ -118,8 +126,12 @@ export async function sendMessage(
               content:
                 template +
                 "\n\n " +
-                "Current time is: " +
-                new Date().toLocaleTimeString("tr-TR"),
+                "Current time is in Istanbul: " +
+                new Date().toLocaleTimeString("tr-TR") +
+                "\n\n" +
+                "Always answer in " +
+                language +
+                ".",
             },
             ...messageParams,
           ];
@@ -143,8 +155,10 @@ export async function sendMessage(
             onPreMessage({
               messages: [
                 {
-                  text: possibleWaitMessages[
-                    Math.floor(Math.random() * possibleWaitMessages.length)
+                  text: possibleWaitMessages[language][
+                    Math.floor(
+                      Math.random() * possibleWaitMessages[language].length
+                    )
                   ],
                   facialExpression: "default",
                   animation: "DismissingGesture",
@@ -182,8 +196,10 @@ export async function sendMessage(
             onPreMessage({
               messages: [
                 {
-                  text: possibleWaitMessages[
-                    Math.floor(Math.random() * possibleWaitMessages.length)
+                  text: possibleWaitMessages[language][
+                    Math.floor(
+                      Math.random() * possibleWaitMessages[language].length
+                    )
                   ],
                   facialExpression: "default",
                   animation: "DismissingGesture",
@@ -234,7 +250,12 @@ export async function sendMessage(
     if (retryCount < 3) {
       console.error("Error while sending message to OpenAI:", error);
       console.log("Retrying...");
-      return await sendMessage(messageParams, onPreMessage, retryCount + 1);
+      return await sendMessage(
+        messageParams,
+        language,
+        onPreMessage,
+        retryCount + 1
+      );
     }
   }
 }

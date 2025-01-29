@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
           content: userMessage,
         });
       }
-      openAImessages = await sendMessage(historyBody, async (preMessage) => {
+      openAImessages = await sendMessage(historyBody,data.language, async (preMessage) => {
         console.log("Pre-message", preMessage);
         let preMessages = preMessage.messages;
         preMessages = await lipSync({ messages: preMessages });
@@ -145,7 +145,7 @@ app.post("/tts", async (req, res) => {
         content: userMessage,
       });
     }
-    openAImessages = await sendMessage(historyBody);
+    openAImessages = await sendMessage(historyBody,req.body.language);
     history = openAImessages.messages;
     openAImessages = openAImessages.completionMessage;
     console.log("Received response from OpenAI");

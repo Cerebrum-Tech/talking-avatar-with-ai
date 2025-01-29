@@ -16,6 +16,7 @@ export const SpeechProvider = ({ children }) => {
 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [allMessagesPlayed, setAllMessagesPlayed] = useState(false);
+  const [language, setLanguage] = useState("en");
 
   useEffect(() => {
     // clear older event listeners
@@ -155,7 +156,7 @@ export const SpeechProvider = ({ children }) => {
       content: message,
     }]);
 
-    socket.emit("tts", { message, history });
+    socket.emit("tts", { message, history,language });
   };
 
   const onMessagePlayed = () => {
@@ -189,6 +190,8 @@ export const SpeechProvider = ({ children }) => {
         setIsSpeaking,
         allMessagesPlayed,
         history,
+        setLanguage,
+        setHistory
       }}
     >
       {children}
