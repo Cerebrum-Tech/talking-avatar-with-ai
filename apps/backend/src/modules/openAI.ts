@@ -130,7 +130,7 @@ export async function sendMessage(
                 new Date().toLocaleTimeString("tr-TR") +
                 "\n\n" +
                 "Always answer in " +
-                language +
+                (language == "en" ? "English" : "Turkish") +
                 ".",
             },
             ...messageParams,
