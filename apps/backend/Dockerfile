@@ -10,12 +10,6 @@ COPY package*.json .
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
-COPY . .
-
-# Build the TypeScript code
-RUN npm run build
-
 # Step 2: Download and extract the Rhubarb Lip Sync binaries
 FROM alpine:3.14 AS rhubarb
 
@@ -43,14 +37,17 @@ WORKDIR /usr/src/app
 # Copy the package.json file to retain the metadata of dependencies in final image
 COPY --from=build /usr/src/app/package*.json ./
 
-# Copy the built application from the build stage
-COPY --from=build /usr/src/app/dist ./dist
-
 # Copy node_modules from the build stage
 COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # Copy the extracted Rhubarb binaries
 COPY --from=rhubarb /tmp/Rhubarb-Lip-Sync-1.13.0-Linux /usr/src/app/bin
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the TypeScript code
+RUN npm run build
 
 # Ensure the binaries have execute permission
 RUN chmod +x /usr/src/app/bin/*
