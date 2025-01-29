@@ -1,26 +1,33 @@
 {
   "metadata": {
     "soundFile": "/Users/emirhaneyidogan/Projeler/cerebrum/talking-avatar-with-ai-1/apps/backend/audios/message_1.wav",
-    "duration": 1.90
+    "duration": 3.36
   },
   "mouthCues": [
-    { "start": 0.00, "end": 0.03, "value": "X" },
-    { "start": 0.03, "end": 0.16, "value": "G" },
-    { "start": 0.16, "end": 0.30, "value": "B" },
-    { "start": 0.30, "end": 0.38, "value": "A" },
-    { "start": 0.38, "end": 0.43, "value": "C" },
-    { "start": 0.43, "end": 0.54, "value": "G" },
-    { "start": 0.54, "end": 0.61, "value": "E" },
-    { "start": 0.61, "end": 0.68, "value": "B" },
-    { "start": 0.68, "end": 0.75, "value": "C" },
-    { "start": 0.75, "end": 0.89, "value": "B" },
-    { "start": 0.89, "end": 0.97, "value": "A" },
-    { "start": 0.97, "end": 1.06, "value": "B" },
-    { "start": 1.06, "end": 1.20, "value": "F" },
-    { "start": 1.20, "end": 1.28, "value": "A" },
-    { "start": 1.28, "end": 1.52, "value": "B" },
-    { "start": 1.52, "end": 1.60, "value": "A" },
-    { "start": 1.60, "end": 1.68, "value": "B" },
-    { "start": 1.68, "end": 1.90, "value": "X" }
+    { "start": 0.00, "end": 0.06, "value": "X" },
+    { "start": 0.06, "end": 0.14, "value": "D" },
+    { "start": 0.14, "end": 0.18, "value": "C" },
+    { "start": 0.18, "end": 0.26, "value": "A" },
+    { "start": 0.26, "end": 0.58, "value": "F" },
+    { "start": 0.58, "end": 0.79, "value": "B" },
+    { "start": 0.79, "end": 0.93, "value": "C" },
+    { "start": 0.93, "end": 1.07, "value": "A" },
+    { "start": 1.07, "end": 1.29, "value": "B" },
+    { "start": 1.29, "end": 1.37, "value": "A" },
+    { "start": 1.37, "end": 1.44, "value": "D" },
+    { "start": 1.44, "end": 1.50, "value": "B" },
+    { "start": 1.50, "end": 1.57, "value": "C" },
+    { "start": 1.57, "end": 1.64, "value": "B" },
+    { "start": 1.64, "end": 1.78, "value": "C" },
+    { "start": 1.78, "end": 1.92, "value": "B" },
+    { "start": 1.92, "end": 1.99, "value": "C" },
+    { "start": 1.99, "end": 2.07, "value": "A" },
+    { "start": 2.07, "end": 2.24, "value": "F" },
+    { "start": 2.24, "end": 2.32, "value": "A" },
+    { "start": 2.32, "end": 2.39, "value": "F" },
+    { "start": 2.39, "end": 2.66, "value": "B" },
+    { "start": 2.66, "end": 2.94, "value": "C" },
+    { "start": 2.94, "end": 3.08, "value": "B" },
+    { "start": 3.08, "end": 3.36, "value": "X" }
   ]
 }

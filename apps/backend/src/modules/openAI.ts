@@ -218,7 +218,7 @@ export async function sendMessage(
       }
 
       const completion2 = await openai.beta.chat.completions.parse({
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         messages,
         tools,
         store: true,
