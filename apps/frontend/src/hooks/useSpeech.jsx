@@ -16,7 +16,7 @@ export const SpeechProvider = ({ children }) => {
 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [allMessagesPlayed, setAllMessagesPlayed] = useState(false);
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState(location.href.includes("en") ? "en" : "tr");
 
   useEffect(() => {
     // clear older event listeners
