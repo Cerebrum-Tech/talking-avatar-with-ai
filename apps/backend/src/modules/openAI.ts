@@ -8,7 +8,6 @@ import {
 } from "openai/resources/index.mjs";
 import searchFlight from "./searchFlight";
 import sendToCereInsight from "./cereInsight";
-import { ParsedChatCompletionMessage } from "openai/resources/beta/chat/completions.mjs";
 
 const openai = new OpenAI();
 

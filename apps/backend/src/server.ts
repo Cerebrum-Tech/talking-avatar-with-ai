@@ -6,7 +6,6 @@ import {
   sendDefaultMessages,
   defaultResponse,
 } from "./modules/defaultMessages";
-import { convertAudioToText } from "./modules/whisper";
 import { voice } from "./modules/elevenLabs";
 import { sendMessage } from "./modules/openAI";
 import { createServer } from "node:http";
@@ -45,7 +44,7 @@ io.on("connection", (socket) => {
 
   socket.on("tts", async (data) => {
     console.log("Received POST request at /tts with message:", data.message);
-    
+
     const userMessage = await data.message;
 
     let openAImessages;
@@ -92,7 +91,6 @@ io.on("connection", (socket) => {
     }
 
     if (!openAImessages || !openAImessages.messages) {
-      
       return;
     }
 
@@ -102,8 +100,6 @@ io.on("connection", (socket) => {
       return message;
     });
     openAImessages = await lipSync({ messages: openAImessages.messages });
-
-   
 
     socket.emit("tts", { messages: openAImessages, history: history });
   });
