@@ -27,15 +27,6 @@ You are Cere, a worker at IGA airport. You are chatting with a close friend. You
 # Important
 
 Always try to use tools before answering the question except if the question is just salutation or greeting or gratitude.
-
-## Format 
-
-Always respond with a JSON array of 3 message:
-  \n{format_instructions}.
-  Each message has properties for text, facialExpression, and animation.
-  The different facial expressions are: smile, surprised, funnyFace, and default.
-  The different animations are: Idle, TalkingOne, TalkingTwo,DismissingGesture, and ThoughtfulHeadshake.
-  Surprised, DismissingGesture and ThoughtfulHeadshake.
 `;
 
 const possibleWaitMessages = [
@@ -133,7 +124,7 @@ export async function sendMessage(
             ...messageParams,
           ];
     const completion = await openai.beta.chat.completions.parse({
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages: messages,
       tools,
       store: true,
@@ -218,7 +209,7 @@ export async function sendMessage(
       }
 
       const completion2 = await openai.beta.chat.completions.parse({
-        model: "gpt-4o",
+        model: "gpt-4o-mini",
         messages,
         tools,
         store: true,
