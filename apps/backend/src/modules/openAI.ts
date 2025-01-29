@@ -226,7 +226,10 @@ export async function sendMessage(
       });
 
       completionMessage = completion2.choices[0].message;
-      messages.push(completion2.choices[0].message);
+      messages.push({
+        role: "assistant",
+        content: completionMessage.content,
+      });
       //console.log(completionMessage);
     } else {
       messages.push({
