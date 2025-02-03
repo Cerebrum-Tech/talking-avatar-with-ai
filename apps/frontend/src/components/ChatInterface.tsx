@@ -44,7 +44,7 @@ export const ChatInterface = ({
       Gönder: "Gönder",
       "Klavyeyi Kapat": "Klavyeyi Kapat",
       "Geri Dön": "Geri Dön",
-      "Yenile": "Yenile",
+      Yenile: "Yenile",
     },
     en: {
       "Canlı Destek": "Live Support",
@@ -52,7 +52,7 @@ export const ChatInterface = ({
       Gönder: "Send",
       "Klavyeyi Kapat": "Close Keyboard",
       "Geri Dön": "Back",
-      "Yenile": "Refresh",
+      Yenile: "Refresh",
     },
   };
 
@@ -230,7 +230,7 @@ export const ChatInterface = ({
           <button
             onClick={() => {
               window.electron.pauseRecording();
-              location.reload()
+              location.reload();
             }}
             className="bg-gray-500 hover:bg-gray-600 text-white p-4 px-4 font-semibold uppercase rounded-md"
           >
@@ -272,6 +272,7 @@ export const ChatInterface = ({
                       <MarkdownPreview
                         style={{
                           backgroundColor: "transparent",
+                          color: "white",
                         }}
                         source={
                           item.content?.includes('"messages"')
