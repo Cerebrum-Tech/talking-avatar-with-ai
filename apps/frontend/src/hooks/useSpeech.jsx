@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { socket } from "../socket";
 
 const backendUrl = "http://localhost:3000";
@@ -16,7 +16,14 @@ export const SpeechProvider = ({ children }) => {
 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [allMessagesPlayed, setAllMessagesPlayed] = useState(false);
-  const [language, setLanguage] = useState(location.href.includes("en") ? "en" : "tr");
+  const [language, setLanguage] = useState(
+    location.href.includes("en") ? "en" : "tr"
+  );
+  const historyRef = useRef(history);
+
+  useEffect(() => {
+    historyRef.current = history;
+  }, [history]);
 
   useEffect(() => {
     // clear older event listeners
@@ -151,12 +158,17 @@ export const SpeechProvider = ({ children }) => {
   const tts = async (message) => {
     setLoading(true);
 
-    setHistory((history) => [...history, {
-      role: "user",
-      content: message,
-    }]);
+    socket.emit("tts", { message, history: historyRef.current, language });
 
-    socket.emit("tts", { message, history,language });
+    setHistory((history) => {
+      return [
+        ...history,
+        {
+          role: "user",
+          content: message,
+        },
+      ];
+    });
   };
 
   const onMessagePlayed = () => {
@@ -191,7 +203,7 @@ export const SpeechProvider = ({ children }) => {
         allMessagesPlayed,
         history,
         setLanguage,
-        setHistory
+        setHistory,
       }}
     >
       {children}

@@ -105,6 +105,7 @@ export const ChatInterface = ({
         !isAudioLoadingRef.current
       );
       if (data.isFinal && !isAudioLoadingRef.current) {
+        console.log("history is 1", history);
         stopListening();
         setIsAudioLoading(true);
         isAudioLoadingRef.current = true;
@@ -147,6 +148,8 @@ export const ChatInterface = ({
         input.current?.setRangeText(" ");
       }
     });
+
+    
   }, []);
 
   const stopListening = async () => {
@@ -160,6 +163,7 @@ export const ChatInterface = ({
     if (transcriptRef.current && transcriptRef.current?.trim() !== "") {
       const currentTranscript = transcriptRef.current.trim();
       console.log("Current transcript", currentTranscript);
+      console.log("history is", history);
       tts(currentTranscript);
     } else {
       console.log("stopListening - empty transcript, restarting listening");
@@ -253,8 +257,8 @@ export const ChatInterface = ({
         <div className="flex flex-col gap-4 w-full max-w-screen-sm mx-auto">
           <div className="flex flex-col gap-2 rounded-md bg-opacity-50 bg-white backdrop-blur-md p-4 max-h-[30vh] overflow-y-auto sc">
             {history
-              .filter((item) => {
-                console.log("item", item);
+              ?.filter((item) => {
+                //console.log("item", item);
                 return (
                   item.role === "user" ||
                   (item.role === "assistant" && item.content)
