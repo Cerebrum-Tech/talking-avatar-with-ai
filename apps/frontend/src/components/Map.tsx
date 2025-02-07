@@ -20,7 +20,6 @@ export default function Map({ language }: { language: string }) {
       ></iframe>
       <button
         onClick={() => {
-          window.electron.changePage("");
           location.href = "/second/" + language;
         }}
         className="fixed z-10 top-0 right-0 m-10 border bg-white text-[#ff5656] rounded-full p-4 px-4 font-semibold uppercase flex items-center gap-2 justify-around"
