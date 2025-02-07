@@ -22,7 +22,6 @@ You are Ayşe, a digital assistant at Istanbul airport. You are chatting with a 
 - Write all numers in words.
 - Do not ask any question unless you need to clarify something.
 - If the question is not about airport, flights, transportation related, do not answer it.
-- Divide a signle message to 6 part to make it parallel.
 
 # Important
 
@@ -61,30 +60,30 @@ const schema = z.object({
       redirectToHuman: z.boolean().optional(),
     })
   ),
-  flight: z
-    .object({
-      type: z.string().optional(),
-      title: z.string().optional(),
-      flight_number: z.string().optional(),
-      destination: z.string().optional(),
-      flight_status: z.string().optional(),
-      latest_update: z.string().optional(),
-      percentage_of_flight_progress: z.string().optional(),
-    })
-    .optional()
-    .describe(
-      "Flight details comes from get_flight_details function. Pass null if not available."
-    ),
-  openMap: z
-    .boolean()
-    .optional()
-    .describe(
-      "Set true if the messages include words like 'turn', 'go' or 'Dönün', 'Arkanızda', 'Geri dönün' etc."
-    ),
-  link: z
-    .string()
-    .optional()
-    .describe("Link to be opened in the browser. Pass null if not available."),
+  // flight: z
+  //   .object({
+  //     type: z.string().optional(),
+  //     title: z.string().optional(),
+  //     flight_number: z.string().optional(),
+  //     destination: z.string().optional(),
+  //     flight_status: z.string().optional(),
+  //     latest_update: z.string().optional(),
+  //     percentage_of_flight_progress: z.string().optional(),
+  //   })
+  //   .optional()
+  //   .describe(
+  //     "Flight details comes from get_flight_details function. Pass null if not available."
+  //   ),
+  // openMap: z
+  //   .boolean()
+  //   .optional()
+  //   .describe(
+  //     "Set true if the messages include words like 'turn', 'go' or 'Dönün', 'Arkanızda', 'Geri dönün' etc."
+  //   ),
+  // link: z
+  //   .string()
+  //   .optional()
+  //   .describe("Link to be opened in the browser. Pass null if not available."),
 });
 
 const tools: ChatCompletionTool[] = [
