@@ -60,6 +60,19 @@ const schema = z.object({
       redirectToHuman: z.boolean().optional(),
     })
   ),
+  flight: z
+    .object({
+      type: z.string().optional(),
+      title: z.string().optional(),
+      flight_number: z.string().optional(),
+      destination: z.string().optional(),
+      flight_status: z.string().optional(),
+      latest_update: z.string().optional(),
+      percentage_of_flight_progress: z.string().optional(),
+    })
+    .optional(),
+  openMap: z.boolean().optional(),
+  link: z.string().optional(),
 });
 
 const tools: ChatCompletionTool[] = [

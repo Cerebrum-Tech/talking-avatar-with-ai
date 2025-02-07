@@ -13,7 +13,8 @@ export const SpeechProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-
+  const [flight, setFlight] = useState(null);
+  const [link,setLink] = useState(null);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [allMessagesPlayed, setAllMessagesPlayed] = useState(false);
   const [language, setLanguage] = useState(
@@ -45,6 +46,11 @@ export const SpeechProvider = ({ children }) => {
       setHistory(response.history);
       setMessages((messages) => [...response.messages]);
       setLoading(false);
+      setFlight(response.flight);
+      setLink(response.link);
+      if (response.openMap) {
+        window.electron.openMap()
+      }
     }
 
     function onPreMessage(response) {
@@ -204,6 +210,7 @@ export const SpeechProvider = ({ children }) => {
         history,
         setLanguage,
         setHistory,
+        flight
       }}
     >
       {children}

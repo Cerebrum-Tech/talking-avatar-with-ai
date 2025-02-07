@@ -12,6 +12,20 @@ declare global {
       pauseRecording(): void;
       onText(arg0: (data: { text: string; isFinal: boolean }) => void): void;
       startRecording: (language: string) => Promise<string>;
+      onHistoryChange: (arg0: (history: any) => void) => void;
+      historyChange: (history: any) => void;
+      onSendMessage: (arg0: (message: any) => void) => void;
+      sendMessage: (message: any) => void;
+      onChangeMicMode: (arg0: (micMode: boolean) => void) => void;
+      changeMicMode: (micMode: boolean) => void;
+      removePageChangeEventListener: () => void;
+      onChangePage: (arg0: (page: string) => void) => void;
+      changePage: (page: string) => void;
+      openMap: () => void;
+      onChangeFlight: (arg0: (flight: any) => void) => void;
+      changeFlight: (flight: any) => void;
+      onChangeLink: (arg0: (link: string) => void) => void;
+      changeLink: (link: string) => void;
     };
   }
 }

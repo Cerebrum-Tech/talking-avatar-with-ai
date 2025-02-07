@@ -3,13 +3,34 @@ import React from 'react';
 interface KeyProps {
   label: string;
   onPress: (key: string) => void;
-  size?: string;
+  sizeMultiplier: number; // multiplier for size
 }
 
-const Key: React.FC<KeyProps> = ({ label, onPress, size }) => {
+const Key: React.FC<KeyProps> = ({ label, onPress, sizeMultiplier }) => {
+  // Define a base width (in pixels) for the keys
+  const baseWidth = 48; // for example, 48 pixels
+
+  // Define an object to map the keys to their relative size factors
+  const sizeFactors: { [key: string]: number } = {
+    'Backspace': 2,
+    'Tab': 1.5,
+    'CapsLock': 2,
+    'Enter': 2,
+    'Shift': 2.5,
+    'Ctrl': 1.5,
+    'Win': 1.5,
+    'Alt': 1.5,
+    'Space': 4,
+  };
+
+  // Get the size factor for the key or default to 1
+  const sizeFactor = sizeFactors[label] || 1;
+  const width = baseWidth * sizeMultiplier * sizeFactor;
+
   return (
     <button 
-      className={`bg-blue-500 text-white font-bold py-2 px-4 active:scale-95 rounded m-1 ${size ? size : 'w-12'}`}
+      style={{ width: `${width}px` }}
+      className="bg-gradient-to-t from-black/10 to-black/45 text-white font-bold  active:scale-95 rounded m-1 py-4 text-xl"
       onClick={() => onPress(label)}
       onMouseDown={e => e.preventDefault()} // Prevent focus on click
     >
@@ -20,33 +41,24 @@ const Key: React.FC<KeyProps> = ({ label, onPress, size }) => {
 
 interface KeyboardProps {
   onKeyPress: (key: string) => void;
+  sizeMultiplier: number; // multiplier for size
 }
 
-const Keyboard: React.FC<KeyboardProps> = ({ onKeyPress }) => {
+const Keyboard: React.FC<KeyboardProps> = ({ onKeyPress, sizeMultiplier }) => {
   const rows = [
-    [
-      { key: '`' }, { key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }, { key: '6' }, { key: '7' }, { key: '8' }, { key: '9' }, { key: '0' }, { key: '-' }, { key: '=' }, { key: 'Backspace', size: 'w-28' }
-    ],
-    [
-      { key: 'Tab', size: 'w-20' }, { key: 'Q' }, { key: 'W' }, { key: 'E' }, { key: 'R' }, { key: 'T' }, { key: 'Y' }, { key: 'U' }, { key: 'I' }, { key: 'O' }, { key: 'P' }, { key: '[' }, { key: ']' }, { key: '\\' }
-    ],
-    [
-      { key: 'CapsLock', size: 'w-24' }, { key: 'A' }, { key: 'S' }, { key: 'D' }, { key: 'F' }, { key: 'G' }, { key: 'H' }, { key: 'J' }, { key: 'K' }, { key: 'L' }, { key: ';' }, { key: '\'' }, { key: 'Enter', size: 'w-28' }
-    ],
-    [
-      { key: 'Shift', size: 'w-32' }, { key: 'Z' }, { key: 'X' }, { key: 'C' }, { key: 'V' }, { key: 'B' }, { key: 'N' }, { key: 'M' }, { key: ',' }, { key: '.' }, { key: '/' }, { key: 'Shift', size: 'w-32' }
-    ],
-    [
-      { key: 'Ctrl', size: 'w-20' }, { key: 'Win', size: 'w-20' }, { key: 'Alt', size: 'w-20' }, { key: 'Space', size: 'w-64' }, { key: 'Alt', size: 'w-20' }, { key: 'Ctrl', size: 'w-20' }
-    ]
+    ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
+    ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\'],
+    ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', 'Enter'],
+    ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'Shift'],
+    ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl']
   ];
 
   return (
-    <div className="p-4 scale-150">
+    <div className="p-4">
       {rows.map((row, rowIndex) => (
         <div key={rowIndex} className="flex justify-center mb-2">
-          {row.map(({ key, size }) => (
-            <Key key={key} label={key} size={size} onPress={onKeyPress} />
+          {row.map((key) => (
+            <Key key={key} label={key} sizeMultiplier={sizeMultiplier} onPress={onKeyPress} />
           ))}
         </div>
       ))}

@@ -6,6 +6,9 @@ import { ChatInterface } from "./components/ChatInterface";
 import Voice from "./components/voice";
 import { BrowserRouter, Routes, Route } from "react-router";
 import SecondScreen from "./components/SecondScreen";
+import SecondVideo from "./components/SecondVideo";
+import FirstVideo from "./components/FirstVideo";
+import PickLanguage from "./components/PickLanguage";
 
 function English() {}
 
@@ -14,38 +17,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+        <Route path="/" element={<FirstVideo />} />
           <Route
-            path="/"
+            path="/pick-language"
             element={
-              <>
-                <div className="flex items-center justify-center h-full">
-                  <div className="flex flex-row gap-4 w-1/2 mx-auto px-8 py-4 justify-center">
-                    <a
-                      href="/tr"
-                      className="flex gap-4 px-8 py-4 items-center h-40 bg-white rounded-full w-1/2"
-                    >
-                      <img
-                        className="rounded-md w-[10em]"
-                        src="tr.svg"
-                        alt=""
-                      />
-                      <span className="text-3xl">Türkçe</span>
-                    </a>
-
-                    <a
-                      href="/en"
-                      className="flex gap-2 px-8 py-4 items-center bg-white rounded-full w-1/2"
-                    >
-                      <img
-                        className="rounded-md w-[10em]"
-                        src="en.svg"
-                        alt=""
-                      />
-                      <span className="text-3xl">English</span>
-                    </a>
-                  </div>
-                </div>
-              </>
+              <PickLanguage />
             }
           />
           {location.href.includes("/en") && (
@@ -78,7 +54,9 @@ function App() {
               }
             />
           )}
-          <Route path="/second" element={<SecondScreen />} />
+          <Route path="/second-video" element={<SecondVideo />} />
+          <Route path="/second/tr" element={<SecondScreen language="tr" />} />
+          <Route path="/second/en" element={<SecondScreen language="en" />} />
         </Routes>
       </BrowserRouter>
     </>

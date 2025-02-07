@@ -49,6 +49,8 @@ io.on("connection", (socket) => {
 
     let openAImessages;
     let history = [];
+    let flight = null
+    let openMap = false
     try {
       console.log("Sending request to OpenAI chain");
       let historyBody = data.history;
@@ -72,12 +74,17 @@ io.on("connection", (socket) => {
 
         socket.emit("pre-message", { messages: preMessages });
       });
+      
+
       history = openAImessages.messages;
       openAImessages = openAImessages.completionMessage;
+     
       //console.log("Received response from OpenAI");
       openAImessages = openAImessages.parsed
         ? openAImessages.parsed
         : JSON.parse(openAImessages.content?.trim());
+        flight = openAImessages?.flight || null
+        openMap = openAImessages.openMap || false
       //console.log("Received response from OpenAI 2", openAImessages);
 
       // openAImessages = await openAIChain.invoke({
@@ -101,7 +108,7 @@ io.on("connection", (socket) => {
     });
     openAImessages = await lipSync({ messages: openAImessages.messages });
 
-    socket.emit("tts", { messages: openAImessages, history: history });
+    socket.emit("tts", { messages: openAImessages, history: history ,flight: flight, openMap: openMap});
   });
 });
 

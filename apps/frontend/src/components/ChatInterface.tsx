@@ -35,6 +35,8 @@ export const ChatInterface = ({
     history,
     setLanguage,
     setHistory,
+    flight,
+    link
   } = useSpeech();
 
   const translated = {
@@ -55,6 +57,14 @@ export const ChatInterface = ({
       Yenile: "Refresh",
     },
   };
+
+  useEffect(() => {
+    window.electron.changeFlight(flight);
+  }, [flight]);
+
+  useEffect(() => {
+    window.electron.changeLink(link);
+  }, [link]);
 
   useEffect(() => {
     console.log("useEffect - setLanguage");
@@ -92,6 +102,23 @@ export const ChatInterface = ({
   if (hidden) {
     return null;
   }
+
+  useEffect(() => {
+    window.electron.onSendMessage((text) => {
+      if (!loading && !message && input.current) {
+        tts(text);
+        input.current.value = "";
+      }
+    });
+
+    window.electron.onChangeMicMode((mode) => {
+      setMicMode(mode);
+    });
+  }, []);
+
+  useEffect(() => {
+    window.electron.historyChange(history);
+  }, [history]);
 
   useEffect(() => {
     console.log("useEffect - init speech recognition");
@@ -148,8 +175,6 @@ export const ChatInterface = ({
         input.current?.setRangeText(" ");
       }
     });
-
-    
   }, []);
 
   const stopListening = async () => {
@@ -207,7 +232,7 @@ export const ChatInterface = ({
   }, [micMode]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 z-10 flex justify-between p-4 flex-col pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 bottom-0 z-10 justify-between p-4 flex-col pointer-events-none hidden">
       {false && (
         <div className="self-start backdrop-blur-md bg-white bg-opacity-50 p-4 rounded-lg">
           <h1 className="font-black text-xl text-gray-700">Digital Human</h1>
@@ -233,6 +258,7 @@ export const ChatInterface = ({
           </button>
           <button
             onClick={() => {
+              window.electron.changePage(language);
               window.electron.pauseRecording();
               location.reload();
             }}
