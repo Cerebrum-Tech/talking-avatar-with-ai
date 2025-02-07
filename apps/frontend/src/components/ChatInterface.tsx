@@ -215,6 +215,10 @@ export const ChatInterface = ({
     setIsListening(true);
   };
 
+  useEffect(() => {
+    window.electron.changeLoading(isAudioLoading);
+  }, [isAudioLoading]);
+
   // scroll down on new message
   useEffect(() => {
     const chat = document.querySelector(".sc");

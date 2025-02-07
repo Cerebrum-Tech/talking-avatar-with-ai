@@ -6,7 +6,7 @@ import { Avatar } from "./Avatar";
 export const Scenario = () => {
   const cameraControls = useRef<CameraControls>(null);
   useEffect(() => {
-    cameraControls.current?.setLookAt(0, 1.6, 3, 1, 0, -80, true); 
+    cameraControls.current?.setLookAt(0, 1.6, 4, 1, 0, -80, true); 
   }, []);
   return (
     <>

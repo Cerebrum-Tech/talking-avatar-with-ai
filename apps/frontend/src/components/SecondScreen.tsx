@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import Keyboard from "./Keyboard";
 import MarkdownPreview from "@uiw/react-markdown-preview";
-import { MdExitToApp, MdRefresh, MdSupportAgent } from "react-icons/md";
+import {
+  MdExitToApp,
+  MdMap,
+  MdRefresh,
+  MdSend,
+  MdSupportAgent,
+} from "react-icons/md";
 import { QRCodeSVG } from "qrcode.react";
 import FlightDetails from "./FlightDetails";
 
@@ -32,6 +38,8 @@ export default function SecondScreen({
       Çıkış: "Çıkış",
       Kapat: "Kapat",
       "Uçuş Bilgileri": "Uçuş Bilgileri",
+      "QR Kod": "QR Kod",
+      Harita: "Harita",
     },
     en: {
       "Canlı Destek": "Live Support",
@@ -43,10 +51,17 @@ export default function SecondScreen({
       Çıkış: "Exit",
       Kapat: "Close",
       "Uçuş Bilgileri": "Flight Information",
+      "QR Kod": "QR Code",
+      Harita: "Map",
     },
   };
 
   useEffect(() => {
+    window.electron.onLoading((loading) => {
+      console.log("loading", loading);
+      setLoading(loading);
+    });
+
     window.electron.onHistoryChange((history) => {
       setHistory(history);
     });
@@ -65,34 +80,91 @@ export default function SecondScreen({
     window.electron.changeMicMode(micMode);
   }, [micMode]);
 
+  useEffect(() => {
+    const chat = document.querySelector(".sc");
+    if (chat) {
+      chat.scrollTop = chat.scrollHeight;
+    }
+  }, [history, loading]);
+
+  useEffect(() => {
+    for (const item of history) {
+      const itemHasMarkdownLinks =
+        item.content?.includes("[") && item.content?.includes("]");
+      if (itemHasMarkdownLinks) {
+        const links = item.content.match(/\[(.*?)\]/g);
+        for (const link of links) {
+          const url = link.replace("[", "").replace("]", "");
+          if (url.includes("http")) {
+            setLink(url);
+          }
+        }
+      }
+    }
+  }, [history]);
+
   return (
     <div className="w-screen h-screen flex flex-row items-center justify-center bg-gradient-to-br from-[#24205F] to-[#243F7A] gap-4">
       <input
         type="checkbox"
         id="my_modal_7"
         className="modal-toggle"
-        checked={!!link || !!flight}
+        checked={
+          !!link ||
+          (!!flight &&
+            !!flight.flight_number &&
+            flight.flight_number !== "null" &&
+            flight.flight_number !== "")
+        }
       />
       <div className="modal" role="dialog">
         <div className="modal-box">
           <h3 className="text-lg font-bold">
-            {flight ? translated[language]["Uçuş Bilgileri"] : "QR Code"}
+            {flight
+              ? translated[language]["Uçuş Bilgileri"]
+              : translated[language]["QR Kod"]}
           </h3>
-          {flight && <FlightDetails flight={flight} />}
+          {flight && <FlightDetails flight={flight} language={language} />}
           {link && <QRCodeSVG value={link} />}
           <div className="modal-action">
-            <label htmlFor="my_modal_6" className="btn">
+            <label
+              htmlFor="my_modal_6"
+              className="btn"
+              onClick={() => {
+                setLink("");
+                setFlight(null);
+              }}
+            >
               {translated[language]["Kapat"]}
             </label>
           </div>
         </div>
-        <label className="modal-backdrop" htmlFor="my_modal_7">
+        <label
+          className="modal-backdrop"
+          htmlFor="my_modal_7"
+          onClick={() => {
+            setLink("");
+            setFlight(null);
+          }}
+        >
           Close
         </label>
       </div>
       <div className="px-4 w-1/6 h-full flex flex-col justify-end py-4 gap-4">
         <button
-          onClick={() => {}}
+          onClick={() => {
+            location.href = "/map/" + language;
+          }}
+          className="bg-white text-[#27445D] rounded-full p-4 px-4 font-semibold uppercase flex items-center gap-2 justify-around"
+        >
+          <MdMap size={30} />
+          {translated[language]["Harita"]}
+        </button>
+        <button
+          onClick={() => {
+            window.electron.changePage(language);
+            location.reload();
+          }}
           className="bg-white text-[#27445D] rounded-full p-4 px-4 font-semibold uppercase flex items-center gap-2 justify-around"
         >
           <MdRefresh size={30} />
@@ -100,6 +172,7 @@ export default function SecondScreen({
         </button>
         <button
           onClick={() => {
+            window.electron.changePage("");
             location.href = "/second-video";
           }}
           className="bg-white text-[#ff5656] rounded-full p-4 px-4 font-semibold uppercase flex items-center gap-2 justify-around"
@@ -154,6 +227,13 @@ export default function SecondScreen({
                     </div>
                   );
                 })}
+              {loading && (
+                <div className="chat chat-start">
+                  <div className="chat-bubble bg-black text-white bg-opacity-60">
+                    <span className="loading loading-dots loading-md"></span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -163,8 +243,10 @@ export default function SecondScreen({
                 onClick={() => {
                   setMicMode(!micMode);
                 }}
-                className={`bg-white  text-[#27445D] rounded-full p-4 px-4 font-semibold uppercase ${
-                  micMode ? "bg-red-500 hover:bg-red-600" : ""
+                className={`  rounded-full p-4 px-4 font-semibold uppercase ${
+                  micMode
+                    ? "bg-red-500 hover:bg-red-600 text-white"
+                    : "bg-white text-[#27445D]"
                 } ${loading || message ? "cursor-not-allowed opacity-30" : ""}`}
               >
                 <svg
@@ -182,19 +264,28 @@ export default function SecondScreen({
                   />
                 </svg>
               </button>
-              <input
-                type="text"
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+              <label className="input input-bordered w-full rounded-[3em] placeholder:text-[#27445D] flex gap-2 justify-between items-center">
+                <input
+                  type="text"
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      window.electron.sendMessage(message);
+                      setMessage("");
+                    }
+                  }}
+                  value={message}
+                  placeholder={translated[language]["Bir şeyler yazın..."]}
+                  className="w-full"
+                />
+                <MdSend
+                  size={30}
+                  onClick={() => {
                     window.electron.sendMessage(message);
                     setMessage("");
-                  }
-                }}
-                value={message}
-                placeholder={translated[language]["Bir şeyler yazın..."]}
-                className="input input-bordered w-full rounded-[3em] placeholder:text-[#27445D]"
-              />
+                  }}
+                />
+              </label>
             </div>
           </div>
         </div>

@@ -49,7 +49,7 @@ export const SpeechProvider = ({ children }) => {
       setFlight(response.flight);
       setLink(response.link);
       if (response.openMap) {
-        window.electron.openMap()
+        window.electron.openMap(language)
       }
     }
 

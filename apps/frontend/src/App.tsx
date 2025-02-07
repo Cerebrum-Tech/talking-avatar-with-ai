@@ -9,6 +9,7 @@ import SecondScreen from "./components/SecondScreen";
 import SecondVideo from "./components/SecondVideo";
 import FirstVideo from "./components/FirstVideo";
 import PickLanguage from "./components/PickLanguage";
+import Map from "./components/Map";
 
 function English() {}
 
@@ -57,6 +58,8 @@ function App() {
           <Route path="/second-video" element={<SecondVideo />} />
           <Route path="/second/tr" element={<SecondScreen language="tr" />} />
           <Route path="/second/en" element={<SecondScreen language="en" />} />
+          <Route path="/map/tr" element={<Map language="tr"/>} />
+          <Route path="/map/en" element={<Map language="en"/>} />
         </Routes>
       </BrowserRouter>
     </>

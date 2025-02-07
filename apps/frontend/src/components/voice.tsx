@@ -21,11 +21,13 @@ declare global {
       removePageChangeEventListener: () => void;
       onChangePage: (arg0: (page: string) => void) => void;
       changePage: (page: string) => void;
-      openMap: () => void;
+      openMap: (language:string) => void;
       onChangeFlight: (arg0: (flight: any) => void) => void;
       changeFlight: (flight: any) => void;
       onChangeLink: (arg0: (link: string) => void) => void;
       changeLink: (link: string) => void;
+      onLoading: (arg0: (loading: boolean) => void) => void;
+      changeLoading: (loading: boolean) => void;
     };
   }
 }
