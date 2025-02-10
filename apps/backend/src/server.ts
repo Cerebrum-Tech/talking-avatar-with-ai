@@ -47,9 +47,7 @@ io.on("connection", (socket) => {
       messages: [
         {
           text: possibleWaitMessages[data.language][
-            Math.floor(
-              Math.random() * possibleWaitMessages[data.language].length
-            )
+            4
           ],
           facialExpression: "default",
           animation: "DismissingGesture",
