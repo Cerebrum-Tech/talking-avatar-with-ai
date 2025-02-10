@@ -7,7 +7,11 @@ import {
   defaultResponse,
 } from "./modules/defaultMessages";
 import { voice } from "./modules/elevenLabs";
-import { possibleWaitMessages, sendMessage } from "./modules/openAI";
+import {
+  helloMessages,
+  possibleWaitMessages,
+  sendMessage,
+} from "./modules/openAI";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 
@@ -46,9 +50,7 @@ io.on("connection", (socket) => {
     const helloMessage = {
       messages: [
         {
-          text: possibleWaitMessages[data.language][
-            4
-          ],
+          text: helloMessages[data.language][0],
           facialExpression: "default",
           animation: "DismissingGesture",
         },

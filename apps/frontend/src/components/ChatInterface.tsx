@@ -38,17 +38,19 @@ export const ChatInterface = ({
     setHistory,
     flight,
     link,
-    sendHello
+    sendHello,
   } = useSpeech();
 
-  const translated = tr
+  const translated = tr;
 
   useEffect(() => {
-    const timeout = setTimeout(()=> {
-      sendHello(language)
-    }, 2000)
-    return clearTimeout(timeout)
-  }, [])
+    const timeout = setTimeout(() => {
+      sendHello(language);
+    }, 1000);
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, []);
 
   useEffect(() => {
     window.electron.changeFlight(flight);
