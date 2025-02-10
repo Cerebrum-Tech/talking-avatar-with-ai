@@ -3,7 +3,7 @@ import languages from "../languages.json";
 export default function PickLanguage() {
   return (
     <>
-      <div className="flex w-full language-picker">
+      <div className="flex w-full language-picker bg-gradient-to-br from-[#2ABBAF] to-[#093430]">
         <div className="grid grid-cols-3 gap-8 mx-auto px-8 py-4 justify-center">
           <a
             href="/second/tr"
