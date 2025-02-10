@@ -78,7 +78,7 @@ export default function SecondScreen({
   }, [history]);
 
   return (
-    <div className="w-screen h-screen flex flex-row items-center justify-center bg-gradient-to-br from-[#24205F] to-[#243F7A] gap-4">
+    <div className="w-screen h-screen flex flex-row items-center justify-center bg-gradient-to-br from-[#2ABBAF] to-[#093430] gap-4">
       <input
         type="checkbox"
         id="my_modal_7"
