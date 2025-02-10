@@ -28,66 +28,76 @@ You are Ayşe, a digital assistant at Istanbul airport. You are chatting with a 
 Always try to use tools before answering the question except if the question is just salutation or greeting or gratitude.
 `;
 
-const possibleWaitMessages = {
+export const possibleWaitMessages = {
   tr: [
     "Biraz bekleteceğim. Anlayışınız için teşekkür ederim.",
     "Kontrol sağlıyorum... Bu, bir kaç saniye sürebilir.",
     "Biraz bekleyin, hemen döneceğim.",
     "Ufak bir araştırma yapmam gerekiyor. Biraz bekleyin lütfen.",
+    "Merhaba, size nasıl yardımcı olabilirim?",
   ],
   en: [
     "I'll make you wait a bit. Thank you for your understanding.",
     "Checking... This may take a few seconds.",
     "Wait a minute, I'll be right back.",
     "I need to do a little research. Please wait.",
+    "Hello, how can I help you?",
   ],
   de: [
     "Ich lasse dich ein wenig warten. Danke für dein Verständnis.",
     "Überprüfen... Dies kann einige Sekunden dauern.",
     "Warte mal, ich bin gleich zurück.",
     "Ich muss ein wenig recherchieren. Bitte warten.",
+    "Hallo, wie kann ich Ihnen helfen?",
   ],
   fr: [
     "Je vais vous faire attendre un peu. Merci pour votre compréhension.",
     "Vérification... Cela peut prendre quelques secondes.",
     "Attendez une minute, je reviens tout de suite.",
     "J'ai besoin de faire un peu de recherche. Veuillez patienter.",
+    "Bonjour, comment puis-je vous aider?",
   ],
   es: [
     "Te haré esperar un poco. Gracias por tu comprensión.",
     "Comprobando... Esto puede tardar unos segundos.",
     "Espera un minuto, vuelvo enseguida.",
     "Necesito hacer una pequeña investigación. Por favor, espera.",
+    "Hola, ¿cómo puedo ayudarte?",
   ],
   it: [
     "Ti farò aspettare un po'. Grazie per la tua comprensione.",
     "Controllo... Questo potrebbe richiedere alcuni secondi.",
     "Aspetta un minuto, torno subito.",
     "Devo fare una piccola ricerca. Per favore, aspetta.",
+    "Ciao, come posso aiutarti?",
   ],
   pt: [
     "Vou fazer você esperar um pouco. Obrigado pela sua compreensão.",
     "Verificando... Isso pode levar alguns segundos.",
     "Espere um minuto, volto já.",
     "Preciso fazer uma pequena pesquisa. Por favor, espere.",
+    "Olá, como posso ajudar?",
   ],
   ar: [
     "سأجعلك تنتظر قليلاً. شكراً لتفهمك.",
     "فحص... قد يستغرق ذلك بضع ثوانٍ.",
     "انتظر دقيقة، سأعود على الفور.",
     "أحتاج إلى القيام ببحث صغير. يرجى الانتظار.",
+    "مرحبًا، كيف يمكنني مساعدتك؟",
   ],
   ru: [
     "Я заставлю вас подождать немного. Спасибо за понимание.",
     "Проверка... Это может занять несколько секунд.",
     "Подождите минуту, я вернусь сразу.",
     "Мне нужно провести небольшое исследование. Пожалуйста, подождите.",
+    "Привет, чем я могу помочь?",
   ],
   zh: [
     "我会让你等一会儿。谢谢你的理解。",
     "检查... 这可能需要几秒钟。",
     "等一下，我马上回来。",
     "我需要做一些小研究。请稍等。",
+    "你好，我能帮你什么？",
   ],
 };
 

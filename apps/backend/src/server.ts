@@ -7,7 +7,7 @@ import {
   defaultResponse,
 } from "./modules/defaultMessages";
 import { voice } from "./modules/elevenLabs";
-import { sendMessage } from "./modules/openAI";
+import { possibleWaitMessages, sendMessage } from "./modules/openAI";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 
@@ -42,6 +42,26 @@ io.on("connection", (socket) => {
   console.log("a user connected");
   socket.removeAllListeners("tts");
 
+  socket.on("hello", async (data) => {
+    const helloMessage = {
+      messages: [
+        {
+          text: possibleWaitMessages[data.language][
+            Math.floor(
+              Math.random() * possibleWaitMessages[data.language].length
+            )
+          ],
+          facialExpression: "default",
+          animation: "DismissingGesture",
+        },
+      ],
+    };
+    let preMessages = helloMessage.messages;
+    preMessages = await lipSync({ messages: preMessages });
+
+    socket.emit("pre-message", { messages: preMessages });
+  });
+
   socket.on("tts", async (data) => {
     console.log("Received POST request at /tts with message:", data.message);
 
@@ -49,8 +69,8 @@ io.on("connection", (socket) => {
 
     let openAImessages;
     let history = [];
-    let flight = null
-    let openMap = false
+    let flight = null;
+    let openMap = false;
     try {
       console.log("Sending request to OpenAI chain");
       let historyBody = data.history;
@@ -67,24 +87,27 @@ io.on("connection", (socket) => {
           content: userMessage,
         });
       }
-      openAImessages = await sendMessage(historyBody,data.language, async (preMessage) => {
-        console.log("Pre-message", preMessage);
-        let preMessages = preMessage.messages;
-        preMessages = await lipSync({ messages: preMessages });
+      openAImessages = await sendMessage(
+        historyBody,
+        data.language,
+        async (preMessage) => {
+          console.log("Pre-message", preMessage);
+          let preMessages = preMessage.messages;
+          preMessages = await lipSync({ messages: preMessages });
 
-        socket.emit("pre-message", { messages: preMessages });
-      });
-      
+          socket.emit("pre-message", { messages: preMessages });
+        }
+      );
 
       history = openAImessages.messages;
       openAImessages = openAImessages.completionMessage;
-     
+
       //console.log("Received response from OpenAI");
       openAImessages = openAImessages.parsed
         ? openAImessages.parsed
         : JSON.parse(openAImessages.content?.trim());
-        flight = openAImessages?.flight || null
-        openMap = openAImessages.openMap || false
+      flight = openAImessages?.flight || null;
+      openMap = openAImessages.openMap || false;
       //console.log("Received response from OpenAI 2", openAImessages);
 
       // openAImessages = await openAIChain.invoke({
@@ -108,7 +131,12 @@ io.on("connection", (socket) => {
     });
     openAImessages = await lipSync({ messages: openAImessages.messages });
 
-    socket.emit("tts", { messages: openAImessages, history: history ,flight: flight, openMap: openMap});
+    socket.emit("tts", {
+      messages: openAImessages,
+      history: history,
+      flight: flight,
+      openMap: openMap,
+    });
   });
 });
 
@@ -152,7 +180,7 @@ app.post("/tts", async (req, res) => {
         content: userMessage,
       });
     }
-    openAImessages = await sendMessage(historyBody,req.body.language);
+    openAImessages = await sendMessage(historyBody, req.body.language);
     history = openAImessages.messages;
     openAImessages = openAImessages.completionMessage;
     console.log("Received response from OpenAI");

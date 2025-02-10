@@ -32,7 +32,7 @@ function App() {
                     <>
                       <Loader />
                       <Leva collapsed />
-                      <ChatInterface language="en" />
+                      <ChatInterface language={language} />
                       <Canvas shadows camera={{ position: [0, 0, 0], fov: 10 }}>
                         <Scenario />
                       </Canvas>

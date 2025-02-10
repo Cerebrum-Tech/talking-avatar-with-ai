@@ -36,7 +36,8 @@ export const ChatInterface = ({
     setLanguage,
     setHistory,
     flight,
-    link
+    link,
+    sendHello
   } = useSpeech();
 
   const translated = {
@@ -57,6 +58,14 @@ export const ChatInterface = ({
       Yenile: "Refresh",
     },
   };
+
+
+  useEffect(() => {
+    const timeout = setTimeout(()=> {
+      sendHello(language)
+    }, 2000)
+    return clearTimeout(timeout)
+  }, [])
 
   useEffect(() => {
     window.electron.changeFlight(flight);

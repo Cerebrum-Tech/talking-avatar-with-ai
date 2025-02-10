@@ -14,12 +14,10 @@ export const SpeechProvider = ({ children }) => {
   const [history, setHistory] = useState([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [flight, setFlight] = useState(null);
-  const [link,setLink] = useState(null);
+  const [link, setLink] = useState(null);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [allMessagesPlayed, setAllMessagesPlayed] = useState(false);
-  const [language, setLanguage] = useState(
-    location.href.split("/").pop()
-  );
+  const [language, setLanguage] = useState(location.href.split("/").pop());
   const historyRef = useRef(history);
 
   useEffect(() => {
@@ -49,7 +47,7 @@ export const SpeechProvider = ({ children }) => {
       setFlight(response.flight);
       setLink(response.link);
       if (response.openMap) {
-        window.electron.openMap(language)
+        window.electron.openMap(language);
       }
     }
 
@@ -161,6 +159,10 @@ export const SpeechProvider = ({ children }) => {
     }
   };
 
+  const sendHello = async (language) => {
+    socket.emit("hello", { language });
+  };
+
   const tts = async (message) => {
     setLoading(true);
 
@@ -210,7 +212,8 @@ export const SpeechProvider = ({ children }) => {
         history,
         setLanguage,
         setHistory,
-        flight
+        flight,
+        sendHello
       }}
     >
       {children}
