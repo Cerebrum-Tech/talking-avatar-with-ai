@@ -1,14 +1,8 @@
+import { tr } from "../constants/languages";
 import { MdExitToApp } from "react-icons/md";
 
 export default function Map({ language }: { language: string }) {
-  const translated = {
-    tr: {
-      Çıkış: "Çıkış",
-    },
-    en: {
-      Çıkış: "Exit",
-    },
-  };
+  const translated = tr
 
   return (
     <>

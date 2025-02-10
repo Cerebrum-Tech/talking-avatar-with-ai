@@ -18,7 +18,7 @@ export const SpeechProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [allMessagesPlayed, setAllMessagesPlayed] = useState(false);
   const [language, setLanguage] = useState(
-    location.href.includes("en") ? "en" : "tr"
+    location.href.split("/").pop()
   );
   const historyRef = useRef(history);
 

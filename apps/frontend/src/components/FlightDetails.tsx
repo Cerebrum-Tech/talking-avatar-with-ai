@@ -1,3 +1,5 @@
+import { tr } from "../constants/languages";
+
 export default function FlightDetails({
   flight,
   language,
@@ -13,22 +15,7 @@ export default function FlightDetails({
     percentage_of_flight_progress: string;
   };
 }) {
-  const translated = {
-    tr: {
-      "Uçuş Numarası": "Uçuş Numarası",
-      Hedef: "Hedef",
-      Durum: "Durum",
-      "Son Güncelleme": "Son Güncelleme",
-      İlerleme: "İlerleme",
-    },
-    en: {
-      "Uçuş Numarası": "Flight Number",
-      Hedef: "Destination",
-      Durum: "Status",
-      "Son Güncelleme": "Last Update",
-      İlerleme: "Progress",
-    },
-  };
+  const translated = tr
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">

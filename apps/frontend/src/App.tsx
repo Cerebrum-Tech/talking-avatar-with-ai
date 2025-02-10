@@ -10,6 +10,7 @@ import SecondVideo from "./components/SecondVideo";
 import FirstVideo from "./components/FirstVideo";
 import PickLanguage from "./components/PickLanguage";
 import Map from "./components/Map";
+import { tr } from "./constants/languages";
 
 function English() {}
 
@@ -18,48 +19,52 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<FirstVideo />} />
-          <Route
-            path="/pick-language"
-            element={
-              <PickLanguage />
-            }
-          />
-          {location.href.includes("/en") && (
-            <Route
-              path="/en"
-              element={
-                <>
-                  <Loader />
-                  <Leva collapsed />
-                  <ChatInterface language="en" />
-                  <Canvas shadows camera={{ position: [0, 0, 0], fov: 10 }}>
-                    <Scenario />
-                  </Canvas>
-                </>
-              }
-            />
-          )}
-          {location.href.includes("/tr") && (
-            <Route
-              path="/tr"
-              element={
-                <>
-                  <Loader />
-                  <Leva collapsed />
-                  <ChatInterface language="tr" />
-                  <Canvas shadows camera={{ position: [0, 0, 0], fov: 10 }}>
-                    <Scenario />
-                  </Canvas>
-                </>
-              }
-            />
-          )}
+          <Route path="/" element={<FirstVideo />} />
+          <Route path="/pick-language" element={<PickLanguage />} />
+          {Object.keys(tr)
+            .filter((lang) => location.href.includes(lang))
+            .map((language) => {
+              return (
+                <Route
+                  key={language}
+                  path={"/" + language}
+                  element={
+                    <>
+                      <Loader />
+                      <Leva collapsed />
+                      <ChatInterface language="en" />
+                      <Canvas shadows camera={{ position: [0, 0, 0], fov: 10 }}>
+                        <Scenario />
+                      </Canvas>
+                    </>
+                  }
+                />
+              );
+            })}
           <Route path="/second-video" element={<SecondVideo />} />
-          <Route path="/second/tr" element={<SecondScreen language="tr" />} />
-          <Route path="/second/en" element={<SecondScreen language="en" />} />
-          <Route path="/map/tr" element={<Map language="tr"/>} />
-          <Route path="/map/en" element={<Map language="en"/>} />
+
+          {Object.keys(tr)
+            .filter((lang) => location.href.includes(lang))
+            .map((language) => {
+              return (
+                <Route
+                  key={language}
+                  path={"/second/" + language}
+                  element={<SecondScreen language={language} />}
+                />
+              );
+            })}
+          {Object.keys(tr)
+            .filter((lang) => location.href.includes(lang))
+            .map((language) => {
+              return (
+                <Route
+                  key={language}
+                  path={"/map/" + language}
+                  element={<Map language={language} />}
+                />
+              );
+            })}
         </Routes>
       </BrowserRouter>
     </>

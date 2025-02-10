@@ -25,8 +25,8 @@ export default function PickLanguage() {
             return (
               <a
               key={language.code}
-                
-                className="flex gap-4 px-8 py-4 items-center h-30 filter grayscale bg-white rounded-full"
+                href={language.active ? `/second/${language.code}` : "#"}
+                className={"flex gap-4 px-8 py-4 items-center h-30 filter bg-white rounded-full" + (language.active ? "" : " grayscale")}
               >
                 <img className="rounded-md w-[6em]" src={language.image} alt="" />
                 <span className="text-2xl">{language.name}</span>

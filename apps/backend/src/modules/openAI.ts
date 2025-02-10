@@ -41,6 +41,54 @@ const possibleWaitMessages = {
     "Wait a minute, I'll be right back.",
     "I need to do a little research. Please wait.",
   ],
+  de: [
+    "Ich lasse dich ein wenig warten. Danke für dein Verständnis.",
+    "Überprüfen... Dies kann einige Sekunden dauern.",
+    "Warte mal, ich bin gleich zurück.",
+    "Ich muss ein wenig recherchieren. Bitte warten.",
+  ],
+  fr: [
+    "Je vais vous faire attendre un peu. Merci pour votre compréhension.",
+    "Vérification... Cela peut prendre quelques secondes.",
+    "Attendez une minute, je reviens tout de suite.",
+    "J'ai besoin de faire un peu de recherche. Veuillez patienter.",
+  ],
+  es: [
+    "Te haré esperar un poco. Gracias por tu comprensión.",
+    "Comprobando... Esto puede tardar unos segundos.",
+    "Espera un minuto, vuelvo enseguida.",
+    "Necesito hacer una pequeña investigación. Por favor, espera.",
+  ],
+  it: [
+    "Ti farò aspettare un po'. Grazie per la tua comprensione.",
+    "Controllo... Questo potrebbe richiedere alcuni secondi.",
+    "Aspetta un minuto, torno subito.",
+    "Devo fare una piccola ricerca. Per favore, aspetta.",
+  ],
+  pt: [
+    "Vou fazer você esperar um pouco. Obrigado pela sua compreensão.",
+    "Verificando... Isso pode levar alguns segundos.",
+    "Espere um minuto, volto já.",
+    "Preciso fazer uma pequena pesquisa. Por favor, espere.",
+  ],
+  ar: [
+    "سأجعلك تنتظر قليلاً. شكراً لتفهمك.",
+    "فحص... قد يستغرق ذلك بضع ثوانٍ.",
+    "انتظر دقيقة، سأعود على الفور.",
+    "أحتاج إلى القيام ببحث صغير. يرجى الانتظار.",
+  ],
+  ru: [
+    "Я заставлю вас подождать немного. Спасибо за понимание.",
+    "Проверка... Это может занять несколько секунд.",
+    "Подождите минуту, я вернусь сразу.",
+    "Мне нужно провести небольшое исследование. Пожалуйста, подождите.",
+  ],
+  zh: [
+    "我会让你等一会儿。谢谢你的理解。",
+    "检查... 这可能需要几秒钟。",
+    "等一下，我马上回来。",
+    "我需要做一些小研究。请稍等。",
+  ],
 };
 
 const schema = z.object({
@@ -127,6 +175,19 @@ const tools: ChatCompletionTool[] = [
   },
 ];
 
+const languageMap = {
+  tr: "Turkish",
+  en: "English",
+  de: "German",
+  fr: "French",
+  es: "Spanish",
+  it: "Italian",
+  pt: "Portuguese",
+  ar: "Arabic",
+  ru: "Russian",
+  zh: "Chinese",
+}
+
 export async function sendMessage(
   messageParams: ChatCompletionMessageParam[],
   language: string,
@@ -154,7 +215,7 @@ export async function sendMessage(
                 new Date().toLocaleTimeString("tr-TR") +
                 "\n\n" +
                 "Always answer in " +
-                (language == "en" ? "English" : "Turkish") +
+                (languageMap[language] || "English") +
                 ".",
             },
             ...messageParams,

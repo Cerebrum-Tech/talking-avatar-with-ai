@@ -10,6 +10,7 @@ import {
 } from "react-icons/md";
 import { QRCodeSVG } from "qrcode.react";
 import FlightDetails from "./FlightDetails";
+import { tr } from "../constants/languages";
 
 export default function SecondScreen({
   language = "tr",
@@ -23,38 +24,11 @@ export default function SecondScreen({
   const [link, setLink] = useState("");
   const [flight, setFlight] = useState(null);
 
+  const translated = tr;
+
   useEffect(() => {
     window.electron.changePage(language);
   }, []);
-
-  const translated = {
-    tr: {
-      "Canlı Destek": "Canlı Destek",
-      "Bir şeyler yazın...": "Bir şeyler yazın...",
-      Gönder: "Gönder",
-      "Klavyeyi Kapat": "Klavyeyi Kapat",
-      "Geri Dön": "Geri Dön",
-      Yenile: "Yenile",
-      Çıkış: "Çıkış",
-      Kapat: "Kapat",
-      "Uçuş Bilgileri": "Uçuş Bilgileri",
-      "QR Kod": "QR Kod",
-      Harita: "Harita",
-    },
-    en: {
-      "Canlı Destek": "Live Support",
-      "Bir şeyler yazın...": "Type something...",
-      Gönder: "Send",
-      "Klavyeyi Kapat": "Close Keyboard",
-      "Geri Dön": "Back",
-      Yenile: "Refresh",
-      Çıkış: "Exit",
-      Kapat: "Close",
-      "Uçuş Bilgileri": "Flight Information",
-      "QR Kod": "QR Code",
-      Harita: "Map",
-    },
-  };
 
   useEffect(() => {
     window.electron.onLoading((loading) => {

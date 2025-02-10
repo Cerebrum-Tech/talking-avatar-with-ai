@@ -1,26 +1,19 @@
 {
   "metadata": {
     "soundFile": "/Users/emirhaneyidogan/Projeler/cerebrum/talking-avatar-with-ai-1/apps/backend/audios/message_0.wav",
-    "duration": 2.40
+    "duration": 1.75
   },
   "mouthCues": [
     { "start": 0.00, "end": 0.04, "value": "X" },
-    { "start": 0.04, "end": 0.09, "value": "B" },
-    { "start": 0.09, "end": 0.27, "value": "C" },
-    { "start": 0.27, "end": 0.41, "value": "A" },
-    { "start": 0.41, "end": 0.88, "value": "B" },
-    { "start": 0.88, "end": 1.02, "value": "C" },
-    { "start": 1.02, "end": 1.16, "value": "G" },
-    { "start": 1.16, "end": 1.23, "value": "B" },
-    { "start": 1.23, "end": 1.37, "value": "C" },
-    { "start": 1.37, "end": 1.44, "value": "B" },
-    { "start": 1.44, "end": 1.52, "value": "A" },
-    { "start": 1.52, "end": 1.65, "value": "B" },
-    { "start": 1.65, "end": 1.72, "value": "F" },
-    { "start": 1.72, "end": 1.80, "value": "A" },
-    { "start": 1.80, "end": 2.06, "value": "B" },
-    { "start": 2.06, "end": 2.10, "value": "A" },
-    { "start": 2.10, "end": 2.18, "value": "B" },
-    { "start": 2.18, "end": 2.40, "value": "X" }
+    { "start": 0.04, "end": 0.28, "value": "D" },
+    { "start": 0.28, "end": 0.35, "value": "E" },
+    { "start": 0.35, "end": 0.42, "value": "F" },
+    { "start": 0.42, "end": 0.49, "value": "G" },
+    { "start": 0.49, "end": 0.70, "value": "C" },
+    { "start": 0.70, "end": 1.26, "value": "B" },
+    { "start": 1.26, "end": 1.40, "value": "G" },
+    { "start": 1.40, "end": 1.57, "value": "A" },
+    { "start": 1.57, "end": 1.65, "value": "B" },
+    { "start": 1.65, "end": 1.75, "value": "X" }
   ]
 }
