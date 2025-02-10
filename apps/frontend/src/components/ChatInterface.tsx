@@ -3,6 +3,7 @@ import { useSpeech } from "../hooks/useSpeech";
 import { GroupProps } from "@react-three/fiber";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { MdSupportAgent } from "react-icons/md";
+import { tr } from "../constants/languages";
 
 export const ChatInterface = ({
   hidden,
@@ -40,25 +41,7 @@ export const ChatInterface = ({
     sendHello
   } = useSpeech();
 
-  const translated = {
-    tr: {
-      "Canlı Destek": "Canlı Destek",
-      "Bir şeyler yazın...": "Bir şeyler yazın...",
-      Gönder: "Gönder",
-      "Klavyeyi Kapat": "Klavyeyi Kapat",
-      "Geri Dön": "Geri Dön",
-      Yenile: "Yenile",
-    },
-    en: {
-      "Canlı Destek": "Live Support",
-      "Bir şeyler yazın...": "Type something...",
-      Gönder: "Send",
-      "Klavyeyi Kapat": "Close Keyboard",
-      "Geri Dön": "Back",
-      Yenile: "Refresh",
-    },
-  };
-
+  const translated = tr
 
   useEffect(() => {
     const timeout = setTimeout(()=> {
