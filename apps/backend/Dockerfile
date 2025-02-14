@@ -1,15 +1,3 @@
-# Step 1: Use an official Node.js runtime as a parent image to build the app
-FROM node:22 AS build
-
-# Set the working directory in the container
-WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json
-COPY package*.json .
-
-# Install dependencies
-RUN npm install
-
 # Step 2: Download and extract the Rhubarb Lip Sync binaries
 FROM alpine:3.14 AS rhubarb
 
@@ -34,20 +22,19 @@ RUN apt-get update && apt-get install -y ffmpeg && apt-get clean && rm -rf /var/
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy the package.json file to retain the metadata of dependencies in final image
-COPY --from=build /usr/src/app/package*.json ./
-
-# Copy node_modules from the build stage
-COPY --from=build /usr/src/app/node_modules ./node_modules
-
-# Copy the extracted Rhubarb binaries
-COPY --from=rhubarb /tmp/Rhubarb-Lip-Sync-1.13.0-Linux /usr/src/app/bin
-
-# Copy the rest of the application code
+# Copy package.json and package-lock.json
 COPY . .
+
+# Install dependencies
+RUN npm install
+
+RUN npm install -g typescript
 
 # Build the TypeScript code
 RUN npm run build
+
+# Copy the extracted Rhubarb binaries
+COPY --from=rhubarb /tmp/Rhubarb-Lip-Sync-1.13.0-Linux /usr/src/app/bin
 
 # Ensure the binaries have execute permission
 RUN chmod +x /usr/src/app/bin/*
