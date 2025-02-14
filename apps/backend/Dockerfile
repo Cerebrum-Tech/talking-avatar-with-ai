@@ -31,7 +31,7 @@ RUN npm install
 RUN npm install -g typescript
 
 # Build the TypeScript code
-RUN npm run build
+# RUN npm run build
 
 # Copy the extracted Rhubarb binaries
 COPY --from=rhubarb /tmp/Rhubarb-Lip-Sync-1.13.0-Linux /usr/src/app/bin
