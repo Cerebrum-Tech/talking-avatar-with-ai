@@ -14,6 +14,7 @@ import {
 } from "./modules/openAI";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+import { FileCache } from "./modules/file-cache";
 
 dotenv.config();
 
@@ -57,7 +58,13 @@ io.on("connection", (socket) => {
       ],
     };
     let preMessages = helloMessage.messages;
-    preMessages = await lipSync({ messages: preMessages });
+    preMessages = await FileCache.remember(
+      helloMessage.messages[0].text,
+      FileCache.MONTH,
+      async () => {
+        return await lipSync({ messages: preMessages });
+      }
+    );
 
     socket.emit("pre-message", { messages: preMessages });
   });
@@ -93,7 +100,13 @@ io.on("connection", (socket) => {
         async (preMessage) => {
           console.log("Pre-message", preMessage);
           let preMessages = preMessage.messages;
-          preMessages = await lipSync({ messages: preMessages });
+          preMessages = await FileCache.remember(
+            preMessage.messages[0].text,
+            FileCache.MONTH,
+            async () => {
+              return await lipSync({ messages: preMessages });
+            }
+          );
 
           socket.emit("pre-message", { messages: preMessages });
         }
