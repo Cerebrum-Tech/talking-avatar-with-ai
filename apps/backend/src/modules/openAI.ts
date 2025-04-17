@@ -148,25 +148,25 @@ const schema = z.object({
 });
 
 const tools: ChatCompletionTool[] = [
-  {
-    type: "function",
-    function: {
-      name: "get_flight_details",
-      description: "Get flight details for a given flight number",
-      parameters: {
-        type: "object",
-        properties: {
-          flight_number: {
-            type: "string",
-            description: "The flight number to get details for",
-          },
-        },
-        required: ["flight_number"],
-        additionalProperties: false,
-      },
-      strict: true,
-    },
-  },
+  // {
+  //   type: "function",
+  //   function: {
+  //     name: "get_flight_details",
+  //     description: "Get flight details for a given flight number",
+  //     parameters: {
+  //       type: "object",
+  //       properties: {
+  //         flight_number: {
+  //           type: "string",
+  //           description: "The flight number to get details for",
+  //         },
+  //       },
+  //       required: ["flight_number"],
+  //       additionalProperties: false,
+  //     },
+  //     strict: true,
+  //   },
+  // },
   {
     type: "function",
     function: {
