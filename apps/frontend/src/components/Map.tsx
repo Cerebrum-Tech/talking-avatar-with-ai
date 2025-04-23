@@ -7,7 +7,7 @@ export default function Map({ language }: { language: string }) {
   return (
     <>
       <iframe
-        src="https://maps.istairport.com/?placeId=fd536e57-abe1-46de-a4f0-bc309cfa327c&startStoreId=F_TD_05&endStoreId=A10&language=tr&vk=true"
+        src="https://app.mappedin.com/map/68090e97819c50000cd8bac5?you-are-here=39.91118778%2C32.80297245&floor=m_2cc36977894f237d&kiosk=true"
         width="100%"
         height="100%"
         frameBorder="0"
