@@ -1,16 +1,16 @@
 version: "3.3"
 services:
-  igabackend:
-    container_name: igabackend
-    image: docker.io/library/igabackend-v1
+  fuarbackend:
+    container_name: fuarbackend
+    image: docker.io/library/fuarbackend-v1
     restart: always
     networks:
       - default
     env_file:
       - apps/backend/.env
     environment:
-      - DOMAIN=igaapi.cerebrumtech.com.tr
-      - VIRTUAL_HOST=igaapi.cerebrumtech.com.tr
+      - DOMAIN=fuarapi.cerebrumtech.com.tr
+      - VIRTUAL_HOST=fuarapi.cerebrumtech.com.tr
       - VIRTUAL_PORT=3000
     volumes:
       - ./log:/app/build/log
@@ -20,17 +20,15 @@ services:
       options:
         max-size: "100m"
         max-file: "3"
-  igafrontend:
-    container_name: igafrontend
-    image: docker.io/library/igafrontend-v1
+  fuarfrontend:
+    container_name: fuarfrontend
+    image: docker.io/library/fuarfrontend-v1
     restart: always
-    ports:
-      - "3001:3000"
     networks:
       - default
     environment:
-      - DOMAIN=iga.cerebrumtech.com.tr
-      - VIRTUAL_HOST=iga.cerebrumtech.com.tr
+      - DOMAIN=fuar.cerebrumtech.com.tr
+      - VIRTUAL_HOST=fuar.cerebrumtech.com.tr
       - VIRTUAL_PORT=3000
     volumes:
       - ./log:/app/build/log
