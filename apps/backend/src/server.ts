@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
         {
           text: helloMessages[data.language][0],
           facialExpression: "default",
-          animation: "DismissingGesture",
+          animation: "Idle",
         },
       ],
     };

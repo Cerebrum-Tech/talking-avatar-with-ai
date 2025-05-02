@@ -259,7 +259,7 @@ export async function sendMessage(
                     )
                   ],
                   facialExpression: "default",
-                  animation: "DismissingGesture",
+                  animation: "Idle",
                 },
               ],
             });
@@ -300,7 +300,7 @@ export async function sendMessage(
                     )
                   ],
                   facialExpression: "default",
-                  animation: "DismissingGesture",
+                  animation: "Idle",
                 },
               ],
             });
