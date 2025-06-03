@@ -13,30 +13,18 @@ import morphTargets from "../constants/morphTargets";
 
 interface CustomGLTF extends GLTF {
   nodes: {
-    EyeLeft: THREE.SkinnedMesh & {
-      morphTargetDictionary: any;
-      morphTargetInfluences: any;
-    };
-    EyeRight: THREE.SkinnedMesh & {
-      morphTargetDictionary: any;
-      morphTargetInfluences: any;
-    };
-    Wolf3D_Body: THREE.SkinnedMesh;
-    Wolf3D_Glasses: THREE.SkinnedMesh;
-    Wolf3D_Hair: THREE.SkinnedMesh;
-    Wolf3D_Head: THREE.SkinnedMesh & {
-      morphTargetDictionary: any;
-      morphTargetInfluences: any;
-    };
-    Wolf3D_Outfit_Bottom: THREE.SkinnedMesh;
-    Wolf3D_Outfit_Footwear: THREE.SkinnedMesh;
-    Wolf3D_Teeth: THREE.SkinnedMesh & {
-      morphTargetDictionary: any;
-      morphTargetInfluences: any;
-    };
-    Hips: THREE.Object3D;
-    Wolf3D_Outfit_Top002: THREE.SkinnedMesh;
-    Wolf3D_Outfit_Top002_1: THREE.SkinnedMesh;
+    EyeLeft: THREE.SkinnedMesh
+    EyeRight: THREE.SkinnedMesh
+    Wolf3D_Body: THREE.SkinnedMesh
+    Wolf3D_Glasses: THREE.SkinnedMesh
+    Wolf3D_Hair: THREE.SkinnedMesh
+    Wolf3D_Head: THREE.SkinnedMesh
+    Wolf3D_Outfit_Bottom: THREE.SkinnedMesh
+    Wolf3D_Outfit_Footwear: THREE.SkinnedMesh
+    Wolf3D_Outfit_Top002: THREE.SkinnedMesh
+    Wolf3D_Outfit_Top002_1: THREE.SkinnedMesh
+    Wolf3D_Teeth: THREE.SkinnedMesh
+    Hips: THREE.Bone
   };
   materials: {
     [key: string]: THREE.Material;
@@ -227,10 +215,10 @@ export function Avatar(props: any) {
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <skinnedMesh
+     <skinnedMesh
         name="EyeLeft"
         geometry={nodes.EyeLeft.geometry}
-        material={materials["Wolf3D_Eye.001"]}
+        material={materials['Wolf3D_Eye.001']}
         skeleton={nodes.EyeLeft.skeleton}
         morphTargetDictionary={nodes.EyeLeft.morphTargetDictionary}
         morphTargetInfluences={nodes.EyeLeft.morphTargetInfluences}
@@ -238,14 +226,14 @@ export function Avatar(props: any) {
       <skinnedMesh
         name="EyeRight"
         geometry={nodes.EyeRight.geometry}
-        material={materials["Wolf3D_Eye.001"]}
+        material={materials['Wolf3D_Eye.001']}
         skeleton={nodes.EyeRight.skeleton}
         morphTargetDictionary={nodes.EyeRight.morphTargetDictionary}
         morphTargetInfluences={nodes.EyeRight.morphTargetInfluences}
       />
       <skinnedMesh
         geometry={nodes.Wolf3D_Body.geometry}
-        material={materials["Wolf3D_Body.001"]}
+        material={materials['Wolf3D_Body.001']}
         skeleton={nodes.Wolf3D_Body.skeleton}
       />
       <skinnedMesh
@@ -255,31 +243,31 @@ export function Avatar(props: any) {
       />
       <skinnedMesh
         geometry={nodes.Wolf3D_Hair.geometry}
-        material={materials["Wolf3D_Hair.001"]}
+        material={materials['Wolf3D_Hair.001']}
         skeleton={nodes.Wolf3D_Hair.skeleton}
       />
       <skinnedMesh
         name="Wolf3D_Head"
         geometry={nodes.Wolf3D_Head.geometry}
-        material={materials["Wolf3D_Skin.001"]}
+        material={materials['Wolf3D_Skin.001']}
         skeleton={nodes.Wolf3D_Head.skeleton}
         morphTargetDictionary={nodes.Wolf3D_Head.morphTargetDictionary}
         morphTargetInfluences={nodes.Wolf3D_Head.morphTargetInfluences}
       />
       <skinnedMesh
         geometry={nodes.Wolf3D_Outfit_Bottom.geometry}
-        material={materials["Wolf3D_Outfit_Bottom.001"]}
+        material={materials['Wolf3D_Outfit_Bottom.001']}
         skeleton={nodes.Wolf3D_Outfit_Bottom.skeleton}
       />
       <skinnedMesh
         geometry={nodes.Wolf3D_Outfit_Footwear.geometry}
-        material={materials["Wolf3D_Outfit_Footwear.001"]}
+        material={materials['Wolf3D_Outfit_Footwear.001']}
         skeleton={nodes.Wolf3D_Outfit_Footwear.skeleton}
       />
       <skinnedMesh
         name="Wolf3D_Teeth"
         geometry={nodes.Wolf3D_Teeth.geometry}
-        material={materials["Wolf3D_Teeth.001"]}
+        material={materials['Wolf3D_Teeth.001']}
         skeleton={nodes.Wolf3D_Teeth.skeleton}
         morphTargetDictionary={nodes.Wolf3D_Teeth.morphTargetDictionary}
         morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
@@ -287,7 +275,7 @@ export function Avatar(props: any) {
       <primitive object={nodes.Hips} />
       <skinnedMesh
         geometry={nodes.Wolf3D_Outfit_Top002.geometry}
-        material={materials["Wolf3D_Outfit_Top.001"]}
+        material={materials['Wolf3D_Outfit_Top.001']}
         skeleton={nodes.Wolf3D_Outfit_Top002.skeleton}
       />
       <skinnedMesh
