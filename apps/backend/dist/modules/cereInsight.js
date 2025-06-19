@@ -18,7 +18,7 @@ function sendToCereInsight(message) {
     return __awaiter(this, void 0, void 0, function* () {
         const options = {
             method: "POST",
-            url: "https://iga2025.cereinsight.com/api/teams/chat",
+            url: "https://kutahyagar.cereinsight.com/api/teams/chat",
             headers: {
                 "x-api-key": process.env.CERE_API_KEY,
                 "Content-Type": "application/json",

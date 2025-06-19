@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
             ],
         };
         let preMessages = helloMessage.messages;
-        preMessages = yield file_cache_1.FileCache.remember(helloMessage.messages[0].text, file_cache_1.FileCache.MONTH, () => __awaiter(void 0, void 0, void 0, function* () {
+        preMessages = yield file_cache_1.FileCache.remember("c_" + helloMessage.messages[0].text, file_cache_1.FileCache.MONTH, () => __awaiter(void 0, void 0, void 0, function* () {
             return yield (0, lip_sync_1.lipSync)({ messages: preMessages });
         }));
         socket.emit("pre-message", { messages: preMessages });
