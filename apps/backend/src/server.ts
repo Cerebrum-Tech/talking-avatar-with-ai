@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
     };
     let preMessages = helloMessage.messages;
     preMessages = await FileCache.remember(
-      helloMessage.messages[0].text,
+      "c_" + helloMessage.messages[0].text,
       FileCache.MONTH,
       async () => {
         return await lipSync({ messages: preMessages });
