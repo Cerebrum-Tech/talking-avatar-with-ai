@@ -8,24 +8,17 @@ import {
 } from "openai/resources/index.mjs";
 import searchFlight from "./searchFlight";
 import sendToCereInsight from "./cereInsight";
+import path from "path";
+import fs from "fs";
 
 const openai = new OpenAI();
 
 dotenv.config();
 
-const template = `
-You are Ayşe, a digital assistant at Kütahya bus terminal. You are chatting with a close friend. You are not a language model and you are not related to openai. You are not a language model.
+const templateFilePath = path.join(__dirname, "..", "prompt.md");
+const template = fs.readFileSync(templateFilePath, "utf8");
 
-- If user asks a frequently asked question, use the get_faq tool to get the answer. If the faq result is not found, redirect user to a human.
-- If it is none of the above, consider it as faq and call the get_faq tool to get the answer.
-- Write all numers in words.
-- Do not ask any question unless you need to clarify something.
-- If the question is not about buses, terminals, transportation related, do not answer it.
-
-# Important
-
-Always try to use tools before answering the question except if the question is just salutation or greeting or gratitude.
-`;
+console.log(template);
 
 export const possibleWaitMessages = {
   tr: [
@@ -166,25 +159,25 @@ const tools: ChatCompletionTool[] = [
   //     strict: true,
   //   },
   // },
-  {
-    type: "function",
-    function: {
-      name: "get_faq",
-      description: "Get the answer to a frequently asked question",
-      parameters: {
-        type: "object",
-        properties: {
-          question: {
-            type: "string",
-            description: "The question to get the answer for",
-          },
-        },
-        required: ["question"],
-        additionalProperties: false,
-      },
-      strict: true,
-    },
-  },
+  // {
+  //   type: "function",
+  //   function: {
+  //     name: "get_faq",
+  //     description: "Get the answer to a frequently asked question",
+  //     parameters: {
+  //       type: "object",
+  //       properties: {
+  //         question: {
+  //           type: "string",
+  //           description: "The question to get the answer for",
+  //         },
+  //       },
+  //       required: ["question"],
+  //       additionalProperties: false,
+  //     },
+  //     strict: true,
+  //   },
+  // },
 ];
 
 const languageMap = {
