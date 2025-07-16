@@ -11,6 +11,7 @@ import FirstVideo from "./components/FirstVideo";
 import PickLanguage from "./components/PickLanguage";
 import Map from "./components/Map";
 import { tr } from "./constants/languages";
+import ChatInterface2 from "./components/ChatInterface2";
 
 function English() {}
 
@@ -32,7 +33,9 @@ function App() {
                     <>
                       <Loader />
                       <Leva collapsed />
+                    
                       <ChatInterface language={language} />
+                      <ChatInterface2 language={language} />
                       <Canvas shadows camera={{ position: [0, 0, 0], fov: 10 }}>
                         <Scenario />
                       </Canvas>

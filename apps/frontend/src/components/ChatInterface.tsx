@@ -202,6 +202,10 @@ export const ChatInterface = ({
     if (!micMode) {
       return;
     }
+    if (isSpeakingRef.current) {
+      console.log("startListening - isSpeakingRef.current", isSpeakingRef.current);
+      return;
+    }
     transcriptRef.current = null;
     //SpeechRecognition.startListening({ language: "tr", continuous: true });
     console.log("startListening - starting recording");
