@@ -216,7 +216,7 @@ export async function sendMessage(
               content:
                 template +
                 "\n\n " +
-                "Current time is in Istanbul: " +
+                "Current time is in Kütahya: " +
                 new Date().toLocaleTimeString("tr-TR") +
                 "\n\n" +
                 "Always answer in " +
