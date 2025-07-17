@@ -200,7 +200,7 @@ function sendMessage(messageParams_1, language_1, onPreMessage_1) {
                         role: "system",
                         content: template +
                             "\n\n " +
-                            "Current time is in Istanbul: " +
+                            "Current time is in Kütahya: " +
                             new Date().toLocaleTimeString("tr-TR") +
                             "\n\n" +
                             "Always answer in " +
